@@ -1,6 +1,8 @@
 {
     "presets": [
         // @babel/preset-env 为es6语法解析
-        "@babel/preset-env"
+        "@babel/preset-env",
+        // react 解析依赖
+        "@babel/preset-react"
     ]
 }

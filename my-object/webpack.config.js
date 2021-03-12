@@ -22,6 +22,30 @@ module.exports = {
             {
                 test: /.js$/,
                 loader: 'babel-loader'
+            },
+            {
+                test: /.css$/,
+                use: [
+                    // css执行是从右到左，loader也是一样。这里先执行css-然后执行style
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+                test: /.less$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'less-loader'
+                ]
+            },
+            {
+                test: /.(png|jpg|jpeg|svg|gif)$/,
+                use: 'file-loader',
+            },
+            {
+                test: /.(woff|woff2|ttf)/,
+                use: 'file-loader'
             }
         ]
     },
