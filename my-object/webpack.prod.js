@@ -7,21 +7,42 @@
     contenthash：根据内容变动hash，文件内容变动和hash改变
 */
 const path = require('path')
+const glob = require('glob')
 // 使用style-loader会把样式内容放入style标签中，mini-css-extract-plugin是把样式打包成文件进行引用
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+
+const setMap = () => {
+    const entry = {}
+    const htmlWebpackPlugin = []
+    const entryFiles = glob.sync(path.resolve('./src/*/index.js'))
+    Object.keys(entryFiles).map(index => {
+        const entryFile = entryFiles[index]
+        const match = entryFile.match(/src\/(.+)\/index.js/)
+
+        if (match === null) return
+        const filename = match[1]
+        entry[filename] = entryFile
+        htmlWebpackPlugin.push(new HtmlWebpackPlugin({
+            template: path.resolve(`src/${filename}/index.html`),
+            filename: `${filename}.html`,
+            chunks: [filename],
+            inject: 'body'
+        }))
+    })
+    return { entry, htmlWebpackPlugin }
+}
+const { entry, htmlWebpackPlugin } = setMap()
+
 module.exports = {
     // 运行环境 - 'production' | 'development' | 'none' - 默认：production
-    mode: 'production', 
+    mode: 'production',
     // 入口
-    entry: {
-        index: './src/index.js',
-        search: './src/search.js'
-    },
+    entry,
     // 输出
-    output: {   
+    output: {
         path: path.resolve(__dirname, 'dist'),
         // 因为没有多出口设置，这里采用占位符的方式设置
         filename: '[name]_[chunkhash:8].js'
@@ -94,20 +115,5 @@ module.exports = {
             assertsNameRegExp: /.css$/g,
             cssProcessor: require('cssnano')
         }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './src/index.html'),
-            filename: 'index.html',
-            chunks: ['index'],
-            // true | false | 'body' | 'head'
-            inject: 'body',
-            minify: true
-        }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './src/search.html'),
-            filename: 'search.html',
-            chunks: ['search'],
-            inject: 'body',
-            minify: true
-        }),
-    ],
+    ].concat(htmlWebpackPlugin),
 }
