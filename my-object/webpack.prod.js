@@ -9,7 +9,10 @@
 
 const path = require('path')
 // 使用style-loader会把样式内容放入style标签中，mini-css-extract-plugin是把样式打包成文件进行引用
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
     // 运行环境 - 'production' | 'development' | 'none' - 默认：production
@@ -70,8 +73,27 @@ module.exports = {
     },
     // 可以引入很多webpack或者第三方的依赖资源，plugins作用于整个构建过程，从开始到结束
     plugins: [
+        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name]_[contenthash:8].css'
-        })
+        }),
+        new OptimizeCSSAssetsWebpackPlugin({
+            assertsNameRegExp: /.css$/g,
+            cssProcessor: require('cssnano')
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './src/index.html'),
+            filename: 'index.html',
+            chunks: ['index'],
+            inject: 'body',
+            minify: true
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './src/search.html'),
+            filename: 'search.html',
+            chunks: ['search'],
+            inject: 'body',
+            minify: true
+        }),
     ],
 }
