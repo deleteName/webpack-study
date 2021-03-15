@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- html-webpack-plugin解析语法使其可以读取 "<%="代码"%>" 这样的语法 -->
+    <script><%=require('raw-loader!babel-loader!../node_modules/lib-flexible/flexible.js')%></script>
     <title>Document</title>
 </head>
 <body>

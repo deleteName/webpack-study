@@ -6,14 +6,12 @@
     chunkhash：根据入口变动hash，当一个文件变动后改文件的hash就会改变，包括其引用资源
     contenthash：根据内容变动hash，文件内容变动和hash改变
 */
-
 const path = require('path')
 // 使用style-loader会把样式内容放入style标签中，mini-css-extract-plugin是把样式打包成文件进行引用
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-
 module.exports = {
     // 运行环境 - 'production' | 'development' | 'none' - 默认：production
     mode: 'production', 
@@ -48,7 +46,17 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'less-loader'
+                    'postcss-loader',
+                    {
+                        loader: 'px2rem-loader',
+                        options: {
+                            // rem转换率 75 => 1rem
+                            remUnit: 75,
+                            // 转换rem后小数点位数 /\d.\d{8}/
+                            remPrecision: 8
+                        }
+                    },
+                    'less-loader',
                 ]
             },
             {
@@ -58,6 +66,11 @@ module.exports = {
                     options: {
                         name: '[name]_[hash:8].[ext]'
                     }
+                    // url-loader 把指定大小文件以下的进行base64转换，内联至代码中
+                    // loader: 'url-loader',
+                    // options: {
+                    //     limit: 10240,
+                    // }
                 },
             },
             {
@@ -85,6 +98,7 @@ module.exports = {
             template: path.resolve(__dirname, './src/index.html'),
             filename: 'index.html',
             chunks: ['index'],
+            // true | false | 'body' | 'head'
             inject: 'body',
             minify: true
         }),
