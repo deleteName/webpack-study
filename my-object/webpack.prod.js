@@ -6,8 +6,17 @@
     chunkhash：根据入口变动hash，当一个文件变动后改文件的hash就会改变，包括其引用资源
     contenthash：根据内容变动hash，文件内容变动和hash改变
 */
+/**
+ *  因为webpack4.x 开始提出0配置，所以在环境为production和development环境下提供了很多配置
+ * 
+ *  production - scope hoisting (默认开启之一)
+ *  1. scope hoisting开启后会替换原有的闭包方式，以引入顺序的方法解析打包代码，优化了因闭包带来的代码大小问题。
+ *  2. 因闭包的删除，打包后的代码整体删除的_webpack_module_函数和webpack_module属性设置相关代码
+ */
+
 const path = require('path')
 const glob = require('glob')
+// const webpack = require('webpack')
 // 使用style-loader会把样式内容放入style标签中，mini-css-extract-plugin是把样式打包成文件进行引用
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -115,6 +124,8 @@ module.exports = {
             assertsNameRegExp: /.css$/g,
             cssProcessor: require('cssnano')
         }),
+        // scope hoisting
+        // new webpack.optimize.ModuleConcatenationPlugin()
     ].concat(htmlWebpackPlugin),
     optimization: {
         // splitChunks 可以将指定包提取至公用库中进行引用，防止同一包多次引用导致多次打包, 详情见[https://webpack.docschina.org/plugins/split-chunks-plugin/]
