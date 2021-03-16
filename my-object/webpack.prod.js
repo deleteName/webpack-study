@@ -17,7 +17,7 @@ const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const setMap = () => {
     const entry = {}
     const htmlWebpackPlugin = []
-    const entryFiles = glob.sync(path.resolve('./src/*/index.js'))
+    const entryFiles = glob.sync(path.resolve(__dirname, 'src/*/index.js'))
     Object.keys(entryFiles).map(index => {
         const entryFile = entryFiles[index]
         const match = entryFile.match(/src\/(.+)\/index.js/)
@@ -26,7 +26,7 @@ const setMap = () => {
         const filename = match[1]
         entry[filename] = entryFile
         htmlWebpackPlugin.push(new HtmlWebpackPlugin({
-            template: path.resolve(`src/${filename}/index.html`),
+            template: path.resolve(__dirname, `src/${filename}/index.html`),
             filename: `${filename}.html`,
             chunks: [filename],
             inject: 'body'
