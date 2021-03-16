@@ -28,7 +28,7 @@ const setMap = () => {
         htmlWebpackPlugin.push(new HtmlWebpackPlugin({
             template: path.resolve(__dirname, `src/${filename}/index.html`),
             filename: `${filename}.html`,
-            chunks: [filename],
+            chunks: ['vendors', filename],
             inject: 'body'
         }))
     })
@@ -116,4 +116,19 @@ module.exports = {
             cssProcessor: require('cssnano')
         }),
     ].concat(htmlWebpackPlugin),
+    optimization: {
+        // splitChunks 可以将指定包提取至公用库中进行引用，防止同一包多次引用导致多次打包, 详情见[https://webpack.docschina.org/plugins/split-chunks-plugin/]
+        splitChunks: {
+            // 引用模块大小，当引用模块大于该大小是才会进入后续操作
+            minSize: 0,
+            cacheGroups: {
+                commons: {
+                    // 详情[https://webpack.docschina.org/plugins/split-chunks-plugin/#split-chunks-example-2]
+                    test: /(react|react-dom)/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            }
+        }
+    }
 }

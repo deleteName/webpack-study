@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "watch": "webpack --watch",
+    "watch": "webpack --config webpack.dev.js --watch",
     "dev": "webpack serve --config webpack.dev.js --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
