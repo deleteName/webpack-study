@@ -37,7 +37,7 @@ const setMap = () => {
         htmlWebpackPlugin.push(new HtmlWebpackPlugin({
             template: path.resolve(__dirname, `src/${filename}/index.html`),
             filename: `${filename}.html`,
-            chunks: ['vendors', filename],
+            chunks: ['commons', filename],
             inject: 'body'
         }))
     })
@@ -135,9 +135,10 @@ module.exports = {
             cacheGroups: {
                 commons: {
                     // 详情[https://webpack.docschina.org/plugins/split-chunks-plugin/#split-chunks-example-2]
-                    test: /(react|react-dom)/,
-                    name: 'vendors',
+                    // test: /(react|react-dom)/,
+                    name: 'commons',
                     chunks: 'all',
+                    minChunks: 2
                 },
             }
         }

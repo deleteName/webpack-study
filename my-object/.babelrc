@@ -4,5 +4,8 @@
         "@babel/preset-env",
         // react 解析依赖
         "@babel/preset-react"
+    ],
+    "plugins": [
+        "@babel/plugin-syntax-dynamic-import"
     ]
 }
