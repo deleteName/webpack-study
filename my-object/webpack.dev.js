@@ -93,7 +93,7 @@ module.exports = {
     target: 'web',
     devServer: {
         contentBase: './dist',
-        port: '1024',
+        // port: '1024',
         hot: true
     },
     // 报错定位，详情[https://www.cnblogs.com/wangyingblog/p/7027540.html] ，关键字（source-map）

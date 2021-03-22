@@ -3445,6 +3445,11 @@ klona@^2.0.4:
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.4.tgz#7bb1e3affb0cb8624547ef7e8f6708ea2e39dfc0"
   integrity sha512-ZRbnvdg/NxqzC7L9Uyqzf4psi1OM4Cuc+sJAkQPjO6XkQIJTNbfK2Rsmbw8fx1p2mkZdp2FZYo2+LwXYY/uwIA==
 
+large-number-handler@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/large-number-handler/-/large-number-handler-0.0.2.tgz#8a47c69c2ccb996ed67a888eb4f5341d23a4fc82"
+  integrity sha512-KKS7YZlqZ0wCEo3qbFB0sfi1iRluS0Kk2tL8lCFKb0KnpaGdU1kbAUw2IDS3kkv4TWDAY1T8Ilsps1SRjQtTYQ==
+
 last-call-webpack-plugin@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/last-call-webpack-plugin/-/last-call-webpack-plugin-3.0.0.tgz#9742df0e10e3cf46e5c0381c2de90d3a7a2d7555"
