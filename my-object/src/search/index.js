@@ -3,6 +3,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './search.less'
+import largeNumber from 'large-number-handler'
 import logo from '../assets/aowo.png'
 
 class Search extends React.Component {
@@ -30,7 +31,7 @@ class Search extends React.Component {
             {
                 Text ? <Text /> : null
             }
-            <span onClick={this.loadComponentText.bind(this)}>搜索文字Watch</span>
+            <span onClick={this.loadComponentText.bind(this)}>搜索文字Watch { largeNumber('999', '1') }</span>
             <img src={logo} />
         </div>
     }
